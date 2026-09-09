@@ -25,7 +25,10 @@ RUN ssh-keygen -q -N "" -t dsa -f /opt/ssh/ssh_host_dsa_key && \
 #COPY supervisord.conf /etc/supervisord.conf
 COPY sshd.conf /etc/supervisord.d/sshd.conf
 
+RUN usermod -u 1000720000 maia-user && \
+    groupmod -g 1000720000 maia-user
 
-USER 1000
+RUN chown -R 1000720000:1000720000 /opt/ssh
+USER 1000720000
 CMD ["jupyterhub-singleuser"]
 ENTRYPOINT ["bash", "/opt/start.sh"]

@@ -59,6 +59,22 @@ COPY kasmvnc.sh /etc/kasmvnc.sh
 RUN chmod 777 /etc/kasmvnc.sh && \
     chmod a+x /etc/kasmvnc.sh
 COPY supervisord.conf   /etc/supervisord.conf
+
+RUN chmod 777 /etc/
+RUN sudo sed -i 's|a.initSetting("path","websockify")|a.initSetting("path",window.location.pathname.replace(/[^/]*$/,"").substring(1)+"websockify")|' \
+  /usr/share/kasmvnc/www/main.bundle.js /usr/share/kasmvnc/www/screen.bundle.js
+
+RUN sudo -u maia-user mkdir -pm700 /tmp/runtime-user
+RUN sudo chown maia-user:maia-user /tmp/runtime-user
+RUN sudo -u maia-user chmod 700 /tmp/runtime-user
+
+RUN sudo mkdir -pm1777 /dev/input || sudo mkdir -pm1777 /dev/input || echo 'Failed to create joystick interposer directory'
+RUN sudo touch /dev/input/js0 /dev/input/js1 /dev/input/js2 /dev/input/js3 || sudo touch /dev/input/js0 /dev/input/js1 /dev/input/js2 /dev/input/js3 || echo 'Failed to create joystick interposer devices'
+RUN sudo chmod 777 /dev/input/js* || sudo chmod 777 /dev/input/js* || echo 'Failed to change permission for joystick interposer devices'
+RUN chmod -R 777 /etc/nginx/
+RUN chmod -R 777 /var/lib/nginx/
+RUN chmod -R 777 /etc/ssl/private
+RUN chmod -R 777 /etc/ssl/certs
 USER 1000
 
 

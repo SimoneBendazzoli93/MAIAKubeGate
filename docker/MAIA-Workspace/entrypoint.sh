@@ -6,17 +6,17 @@
 
 trap "echo TRAPed signal" HUP INT QUIT TERM
 
-sudo chown maia-user:maia-user /home/maia-user || sudo chown maia-user:maia-user /home/maia-user/* || { echo "Failed to change maia-user directory permissions. There may be permission issues."; }
+#sudo chown maia-user:maia-user /home/maia-user || sudo chown maia-user:maia-user /home/maia-user/* || { echo "Failed to change maia-user directory permissions. There may be permission issues."; }
 
 # Change operating system password to environment variable (fallback if not set by update script)
 if [ ! -d /home/maia-user/Tutorials ]; then
-  sudo cp -r /etc/Tutorials /home/maia-user
-  sudo chmod -R 777 /home/maia-user/Tutorials
+  cp -r /etc/Tutorials /home/maia-user
+  chmod -R 777 /home/maia-user/Tutorials
 fi
 
 if [ ! -f /home/maia-user/Welcome.ipynb ]; then
-  sudo cp /etc/Welcome.ipynb /home/maia-user
-  sudo chmod 777 /home/maia-user/Welcome.ipynb
+  cp /etc/Welcome.ipynb /home/maia-user
+  chmod 777 /home/maia-user/Welcome.ipynb
 fi
 
 
@@ -33,9 +33,9 @@ else
 fi
 
 # Set password from PASSWD env var if present (fallback if not set by credentials update script)
-if [ -n "$PASSWD" ]; then
-  echo "$(whoami):$PASSWD" | sudo chpasswd
-fi
+#if [ -n "$PASSWD" ]; then
+#  echo "$(whoami):$PASSWD" | sudo chpasswd
+#fi
 
 if [ ! -f /home/maia-user/.bash_profile ]; then
   cp /etc/.bash_profile /home/maia-user/

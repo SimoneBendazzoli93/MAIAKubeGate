@@ -8,7 +8,7 @@ fi
 wget https://www.mitk.org/download/releases/MITK-2024.12/Ubuntu%2022.04/MITK-v2024.12-linux-x86_64.tar.gz
 #tar --help
 tar -xvf MITK-v2024.12-linux-x86_64.tar.gz -C /home/maia-user/Documents/ && rm MITK-v2024.12-linux-x86_64.tar.gz
-sudo chmod u+x $HOME/Documents/MITK-v2024.12-linux-x86_64/MitkWorkbench.sh
+chmod u+x $HOME/Documents/MITK-v2024.12-linux-x86_64/MitkWorkbench.sh
 
 
 cp /etc/MITK.desktop $HOME/Desktop/

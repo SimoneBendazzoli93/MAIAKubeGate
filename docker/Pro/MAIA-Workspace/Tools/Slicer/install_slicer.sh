@@ -6,10 +6,9 @@ if [ -d $HOME/Documents/Slicer-5.10.0-linux-amd64 ]; then
     exit 0
 fi
 
-sudo chmod 777 /etc/
 wget https://download.slicer.org/bitstream/6911b598ac7b1c95e7934427 -O /etc/slicer.tar.gz
 
-sudo cp /etc/slicer.tar.gz $HOME/Documents/
+cp /etc/slicer.tar.gz $HOME/Documents/
 
 tar -xf $HOME/Documents/slicer.tar.gz -C $HOME/Documents/
 

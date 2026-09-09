@@ -11,7 +11,7 @@ RUN apt-get update && \
     apt-get clean && apt-get -y autoremove && rm -rf /var/lib/apt/lists/* && \
     wget https://www.mathworks.com/mpm/glnxa64/mpm && chmod +x mpm
 
-USER 1000
+USER 1000720000
 RUN sudo mkdir /opt/matlab && \
     sudo chmod -R 777 /opt/matlab && \
     sudo ./mpm install --release ${MATLAB_RELEASE} --products MATLAB --destination=/opt/matlab && \
@@ -36,7 +36,7 @@ RUN pip install jupyter-ai jupyter-vscode-proxy --break-system-packages && pip i
 
 RUN curl -fsSL https://code-server.dev/install.sh | sh && \
     wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.8.25/quarto-1.8.25-linux-amd64.deb && dpkg -i quarto-1.8.25-linux-amd64.deb && \
-    pip install glue-jupyterlab "glueviz[all,qt]" --break-system-packages && \
+    #pip install glue-jupyterlab "glueviz[all,qt]" --break-system-packages && \
     apt-get install python3-pyqt5.qtquick python3-pyqt5.qtsvg -y
 
 COPY Tools/Matlab/Matlab.desktop /etc/Matlab.desktop
@@ -49,6 +49,6 @@ RUN pip install jupyterlab_nvdashboard --break-system-packages && \
 #RUN pip install "elyra[all]"
 COPY start.sh /opt/start.sh
 
-USER 1000
+USER 1000720000
 CMD ["jupyterhub-singleuser"]
 ENTRYPOINT ["bash", "/opt/start.sh"]

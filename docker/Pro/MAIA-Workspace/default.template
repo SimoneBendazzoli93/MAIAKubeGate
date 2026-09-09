@@ -2,7 +2,7 @@
 server {
     access_log /dev/stdout;
     error_log /dev/stderr;
-    listen 80 ;
+    listen 8080 ;
     #listen [::]:80 ;
     ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
     ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;

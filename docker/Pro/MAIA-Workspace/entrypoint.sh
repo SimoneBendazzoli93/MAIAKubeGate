@@ -4,28 +4,26 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-sudo sed -i 's|a.initSetting("path","websockify")|a.initSetting("path",window.location.pathname.replace(/[^/]*$/,"").substring(1)+"websockify")|' \
-  /usr/share/kasmvnc/www/main.bundle.js /usr/share/kasmvnc/www/screen.bundle.js
+#sudo sed -i 's|a.initSetting("path","websockify")|a.initSetting("path",window.location.pathname.replace(/[^/]*$/,"").substring(1)+"websockify")|' \
+#  /usr/share/kasmvnc/www/main.bundle.js /usr/share/kasmvnc/www/screen.bundle.js
 
 trap "echo TRAPed signal" HUP INT QUIT TERM
 
 # Create and modify permissions of XDG_RUNTIME_DIR
 ## Added by MAIA-PRO
-sudo -u maia-user mkdir -pm700 /tmp/runtime-user
-sudo chown maia-user:maia-user /tmp/runtime-user
-sudo -u maia-user chmod 700 /tmp/runtime-user
+
 ## End Added by MAIA-PRO
 # Make user directory owned by the user in case it is not
-sudo chown maia-user:maia-user /home/maia-user || sudo chown maia-user:maia-user /home/maia-user/* || { echo "Failed to change maia-user directory permissions. There may be permission issues."; }
+#sudo chown maia-user:maia-user /home/maia-user || sudo chown maia-user:maia-user /home/maia-user/* || { echo "Failed to change maia-user directory permissions. There may be permission issues."; }
 # Change operating system password to environment variable
 if [ ! -d /home/maia-user/Tutorials ]; then
-  sudo cp -r /etc/Tutorials /home/maia-user
-  sudo chmod -R 777 /home/maia-user/Tutorials
+  cp -r /etc/Tutorials /home/maia-user
+  #chmod -R 777 /home/maia-user/Tutorials
 fi
 
 if [ ! -f /home/maia-user/Welcome.ipynb ]; then
-  sudo cp /etc/Welcome.ipynb /home/maia-user
-  sudo chmod 777 /home/maia-user/Welcome.ipynb
+  cp /etc/Welcome.ipynb /home/maia-user
+  #chmod 777 /home/maia-user/Welcome.ipynb
 fi
 
 
@@ -41,16 +39,16 @@ else
   echo "JUPYTERHUB_POD_NAME=${JUPYTERHUB_POD_NAME}" >> /home/maia-user/.env
 fi
 
-echo "maia-user:$PASSWD" | sudo chpasswd
+#echo "maia-user:$PASSWD" | sudo chpasswd
 ## Added by MAIA-PRO
 /etc/kasmvnc.sh &
 # Add custom processes right below this line, or within `supervisord.conf` to perform service management similar to systemd
 
 
-sudo sed -i 's|worker_processes .*|worker_processes 1;|' /etc/nginx/nginx.conf
+sed -i 's|worker_processes .*|worker_processes 1;|' /etc/nginx/nginx.conf
 
 envsubst '${JUPYTERHUB_USER},${NAMESPACE}' < /etc/default.template > default
-sudo mv default /etc/nginx/sites-enabled/
+mv default /etc/nginx/sites-enabled/
 #sudo nginx -c /etc/nginx/nginx.conf -g 'daemon off;' &
 
 ## End Added by MAIA-PRO
